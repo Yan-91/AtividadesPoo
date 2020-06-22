@@ -6,11 +6,13 @@ namespace Aula22
     {
         static void Main(string[] args)
         {
-            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.ForegroundColor = ConsoleColor.Green;
 
-            Conversor.CotacaoDolar = 5.23f;
-            Console.WriteLine(Conversor.ConverterDolarParaReal(200));
-            Console.WriteLine(Conversor.ConverterRealParaDolar(200));
+            Conversor.CotacaoLibras = 6.55f;
+            Console.WriteLine(Conversor.ConverterLibrasParaReal(200));
+            Console.ResetColor();
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine(Conversor.ConverterRealParaLibras(200));
             Console.ResetColor();
         }
     }
