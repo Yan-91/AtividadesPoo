@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace Aula27_28_29_30
 {
@@ -10,82 +11,122 @@ namespace Aula27_28_29_30
         public string Nome { get; set; }
         public float Preco { get; set; }
 
-        private const string PATH = "Database/Produto.csv";
+        private const string PATH = "Database/produto.csv";
 
-        /// <summary>
-        /// Encontrar as linhas(fazer leitura)
-        /// </summary>
-        /// <returns> produtos </returns>
-        public List<Produto> Ler(){
-            // Criamos uma lista de produtos
-            List<Produto> produtos = new List<Produto>();
-
-            // Transformamos as linhas encontradas em um array de strings
-            string[] linhas = File.ReadAllLines(PATH);
-
-            //Varremos esse array de strings
-            foreach(var linha in linhas){
-
-                //quebramos cada linha em partes
-                string[] dados = linha.Split(";");
-
-                //Tratamos os dados e adicionamos um novo produto
-                Produto prod    = new Produto();
-                prod.Codigo     = Int32.Parse( Separar(dados[0]) );
-                prod.Nome       = Separar( dados[1]);
-                prod.Preco      = float.Parse( Separar(dados[2]));
-
-                // Agora adicionamos o produto tratado na lista de produtos antes de retorna-la
-                produtos.Add(prod);
-
-            }
-            return produtos;
-        }
-            //Buscar por Nome através da expressão lambda
-
-        /// <summary>
-        /// Separar conteudo apresentado para o usuário
-        /// </summary>
-        /// <param name="_coluna">Objeto</param>
-        /// <returns>Em colunas</returns>
-        private string Separar(string _coluna){
-
-            //0
-            //nome = Riven
-            return _coluna.Split("=")[1];
-        }
-        
-        public Produto(){
-
+        public Produto()
+        {
+            // ------------------------------------------------
+            // Solução do desafio
             string pasta = PATH.Split('/')[0];
+
             if(!Directory.Exists(pasta)){
                 Directory.CreateDirectory(pasta);
             }
+            // ------------------------------------------------
 
-            //Criar arquivo caso n exista
-            if(!File.Exists(PATH)){
+            if(!File.Exists(PATH))
+            {
                 File.Create(PATH).Close();
             }
         }
 
         /// <summary>
-        /// Inserir as linahs prontas no arquivo
+        /// Cadastra um produto
         /// </summary>
-        /// <param name="p">Produtos cadastrados</param>
-        public void Inserir(Produto p){
-            var linha = new string[]{ p.PeprararLinhaCSV(p) };
+        /// <param name="prod">Objeto Produto</param>
+        public void Cadastrar(Produto prod)
+        {
+            var linha = new string[] { PrepararLinha(prod) };
             File.AppendAllLines(PATH, linha);
         }
 
         /// <summary>
-        ///  Fazer as linhas
+        /// Lê o csv 
         /// </summary>
-        /// <param name="produto">Objetos escrtios</param>
-        /// <returns>Escrever produto, nome e preço</returns>
-        private string PeprararLinhaCSV(Produto produto){
-            return $"codigo={produto.Codigo};nome={produto.Nome};preco={produto.Preco}";
+        /// <returns>Lista de produtos</returns>
+        public List<Produto> Ler()
+        {
+            // Criamos uma lista que servirá como nosso retorno
+            List<Produto> produtos = new List<Produto>();
+
+            // Lemos o arquivo e transformamos em um array de linhas
+            // [0] = codigo=1;nome=Gibson;preco=7500
+            // [1] = codigo=1;nome=Fender;preco=7500 
+            string[] linhas = File.ReadAllLines(PATH);
+
+            foreach(string linha in linhas){
+                
+                // Separamos os dados de cada linha com Split
+                // [0] = codigo=1
+                // [1] = nome=Gibson
+                // [2] = preco=7500
+                string[] dado = linha.Split(";");
+
+                // Criamos instâncias de produtos para serem colocados na lista
+                Produto p   = new Produto();
+                p.Codigo    = Int32.Parse( Separar(dado[0]) );
+                p.Nome      = Separar(dado[1]);
+                p.Preco     = float.Parse( Separar(dado[2]) );
+
+                produtos.Add(p);
+            }
+
+            produtos = produtos.OrderBy(y => y.Nome).ToList();
+            return produtos; 
         }
 
-        
+        /// <summary>
+        /// Remove uma ou mais linhas que contenham o termo
+        /// </summary>
+        /// <param name="_termo">termo para ser buscado</param>
+        public void Remover(string _termo){
+
+            // Criamos uma lista que servirá como uma espécie de backup para as linhas do csv
+            List<string> linhas = new List<string>();
+
+            // Utilizamos a bliblioteca StreamReader para ler nosso .csv
+            using(StreamReader arquivo = new StreamReader(PATH))
+            {
+                string linha;
+                while((linha = arquivo.ReadLine()) != null)
+                {
+                    linhas.Add(linha);
+                }
+            }
+
+            // Removemos as linhas que tiverem o termo passado como argumento
+            // codigo=1;nome=Tagima;preco=7500
+            // Tagima 
+            linhas.RemoveAll(l => l.Contains(_termo));
+
+            // Reescrevemos nosso csv do zero
+            using(StreamWriter output = new StreamWriter(PATH))
+            {
+                foreach(string ln in linhas)
+                {
+                    output.Write(ln + "\n");
+                }
+            }
+        }
+
+
+        public List<Produto> Filtrar(string _nome)
+        {
+            return Ler().FindAll(x => x.Nome == _nome);
+        }
+
+        private string Separar(string _coluna)
+        {
+            // 0      1
+            // nome = Gibson
+            return _coluna.Split("=")[1];
+        }
+
+        // 1;Celular;600
+        private string PrepararLinha(Produto p)
+        {
+            return $"codigo={p.Codigo};nome={p.Nome};preco={p.Preco}";
+        }
+
     }
 }
