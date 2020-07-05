@@ -1,0 +1,13 @@
+C:\Users\Yan\Desktop\Yan-Aula31\bin\Debug\netcoreapp3.1\Yan-Aula31.exe
+C:\Users\Yan\Desktop\Yan-Aula31\bin\Debug\netcoreapp3.1\Yan-Aula31.deps.json
+C:\Users\Yan\Desktop\Yan-Aula31\bin\Debug\netcoreapp3.1\Yan-Aula31.runtimeconfig.json
+C:\Users\Yan\Desktop\Yan-Aula31\bin\Debug\netcoreapp3.1\Yan-Aula31.runtimeconfig.dev.json
+C:\Users\Yan\Desktop\Yan-Aula31\bin\Debug\netcoreapp3.1\Yan-Aula31.dll
+C:\Users\Yan\Desktop\Yan-Aula31\bin\Debug\netcoreapp3.1\Yan-Aula31.pdb
+C:\Users\Yan\Desktop\Yan-Aula31\obj\Debug\netcoreapp3.1\Yan-Aula31.csprojAssemblyReference.cache
+C:\Users\Yan\Desktop\Yan-Aula31\obj\Debug\netcoreapp3.1\Yan-Aula31.AssemblyInfoInputs.cache
+C:\Users\Yan\Desktop\Yan-Aula31\obj\Debug\netcoreapp3.1\Yan-Aula31.AssemblyInfo.cs
+C:\Users\Yan\Desktop\Yan-Aula31\obj\Debug\netcoreapp3.1\Yan-Aula31.csproj.CoreCompileInputs.cache
+C:\Users\Yan\Desktop\Yan-Aula31\obj\Debug\netcoreapp3.1\Yan-Aula31.dll
+C:\Users\Yan\Desktop\Yan-Aula31\obj\Debug\netcoreapp3.1\Yan-Aula31.pdb
+C:\Users\Yan\Desktop\Yan-Aula31\obj\Debug\netcoreapp3.1\Yan-Aula31.genruntimeconfig.cache
